@@ -49,8 +49,8 @@ module.exports = function(config) {
       "bower_components/kubernetes-container-terminal/dist/container-terminal.js",
       "bower_components/messenger/build/js/messenger.js",
       "bower_components/openshift-object-describer/dist/object-describer.js",
-      'app/config.js',
-      'app/scripts/**/*.js',
+      'config.js',
+      'scripts/**/*.js',
       //'test/mock/**/*.js',
       'test/spec/spec-helper.js',
       'test/spec/**/*.js'
