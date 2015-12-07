@@ -29,10 +29,22 @@
                   "type": "object",
                   "properties": {
                     "name": {
+                      "title": "Name",
                       "type": "string",
-                      "description": "Template Name",
-                      "minLength": 4,
-                      "default": "My Template"
+                      "description": "Should match the pattern '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'",
+                      "maxLength": 253,
+                      "pattern": "[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*",
+                      "default": "my-template",
+                      "required": true
+                    },
+                    "description": {
+                      "title": "Description",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "title": "Tags",
+                      "type": "string",
+                      "description": "List of comma separated values"
                     }
                   }
                 }

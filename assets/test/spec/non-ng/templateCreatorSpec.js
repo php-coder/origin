@@ -11,21 +11,31 @@ describe("TemplateCreator", function(){
        "kind": "Template",
        "apiVersion": "v1",
        "metadata": {
-        "name": ""
+        "name": "",
+        "annotations": {
+          "description": "",
+          "tags": "",
+        }
        }
      });
     });
 
-    it("should set template name", function(){
+    it("should transform form", function(){
       var result = formOutputToTemplate({
-        name: "foo"
+        name: "foo",
+        description: "Foo",
+        tags: "foo,bar"
       });
 
       expect(result).toEqual({
          "kind": "Template",
          "apiVersion": "v1",
          "metadata": {
-          "name": "foo"
+          "name": "foo",
+          "annotations": {
+            "description": "Foo",
+            "tags": "foo,bar",
+          }
          }
        });
     });
