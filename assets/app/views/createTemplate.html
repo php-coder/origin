@@ -72,7 +72,23 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "required": true
+                  },
+                  "replicas": {
+                    "type": "integer",
+                    "required": true,
+                    "default": 1
+                  },
+                  "selector": {
+                    "type": "object",
+                    "options": {
+                      "disable_properties": false
+                    },
+                    "additionalProperties": {"type": "string"},
+                    "minProperties": 1,
+                    "required": true,
+                    "default": {"name": ""}
                   }
                 }
               },
