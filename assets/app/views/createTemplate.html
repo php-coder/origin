@@ -40,7 +40,9 @@
 
               // Hook up the submit button to log to the console
               document.getElementById("submit").addEventListener("click",function() {
-                console.log(editor.getValue());
+                var data = editor.getValue();
+                console.log(data);
+                console.log(formOutputToTemplate(data));
               });
             </script>
 
