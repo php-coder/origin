@@ -18,36 +18,105 @@
             <button id="submit">Create (console.log)</button>
 
             <script>
+              var serviceSchema = {
+                "title": "Service",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "selector": {
+                    "type": "object",
+                    "options": {
+                      "disable_properties": false
+                    },
+                    "additionalProperties": {"type": "string"},
+                    "minProperties": 1,
+                    "required": true,
+                    "default": {"name": ""}
+                  },
+                  "ports": {
+                    "title": "Ports",
+                    "type": "array",
+                    "items": {
+                      "title": "Port",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "required": true
+                        },
+                        "port": {
+                          "type": "integer",
+                          "required": true,
+                          "default": 8080
+                        },
+                        "targetPort": {
+                          "type": "integer",
+                          "required": true,
+                          "default": 8080
+                        }
+                      }
+                    },
+                    "default": [{
+                      "name": "web",
+                      "port": 8080,
+                      "targetPort": 8080,
+                    }]
+                  }
+                }
+              },
+              deploymentConfigSchema = {
+                "title": "Deployment Configuration",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              templateSchema = {
+                "title": "Template",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "description": "Should match the pattern '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'",
+                    "maxLength": 253,
+                    "pattern": "[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*",
+                    "default": "my-template",
+                    "required": true
+                  },
+                  "description": {
+                    "title": "Description",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "title": "Tags",
+                    "type": "string",
+                    "description": "List of comma separated values"
+                  },
+                  "objects": {
+                    "title": "Objects",
+                    "type": "array",
+                    "items": {
+                      "title": "Object",
+                      "type": "object",
+                      "oneOf": [deploymentConfigSchema, serviceSchema]
+                    }
+                  }
+                }
+              };
+
               var editor = new JSONEditor(document.getElementById("editor_holder"), {
                 theme: "bootstrap3",
                 iconlib: "fontawesome4",
                 disable_collapse: true,
                 disable_edit_json: true,
                 disable_properties: true,
-                schema: {
-                  "title": "Template",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "title": "Name",
-                      "type": "string",
-                      "description": "Should match the pattern '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'",
-                      "maxLength": 253,
-                      "pattern": "[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*",
-                      "default": "my-template",
-                      "required": true
-                    },
-                    "description": {
-                      "title": "Description",
-                      "type": "string"
-                    },
-                    "tags": {
-                      "title": "Tags",
-                      "type": "string",
-                      "description": "List of comma separated values"
-                    }
-                  }
-                }
+                schema: templateSchema
               });
 
               // Hook up the submit button to log to the console
