@@ -23,12 +23,28 @@
               <div><code>oc create -f &lt;filename&gt; -n {{projectName}}</code></div>
             </p>
 
+            <p>
+              To create your own template:
+              <a ng-href="project/{{projectName}}/create/template" class="btn btn-primary">
+                Create Template
+              </a>
+            </p>
+
+
             <p><a href="{{projectName | projectOverviewURL}}">Back to overview</a></p>
           </div>
 
           <!-- Show an abbreviated message if only non-builders exist in the project.
                We show a link to view the non-builder images below. -->
-          <p ng-if="emptyCatalog && loaded && nonBuilderImages.length">No builder images or templates.</p>
+          <div ng-if="emptyCatalog && loaded && nonBuilderImages.length">
+            <p>No builder images or templates.</p>
+            <p>
+              To create your own template:
+              <a ng-href="project/{{projectName}}/create/template" class="btn btn-primary">
+                Create Template
+              </a>
+            </p>
+          </div>
 
           <div ng-show="!emptyCatalog">
             <h1>Select Image or Template</h1>
