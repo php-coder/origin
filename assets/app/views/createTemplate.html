@@ -1,0 +1,22 @@
+<div>
+  <div class="add-to-project">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="{{projectName | projectOverviewURL}}">{{(project | displayName) || projectName}}</a></li>
+        <li class="active"><strong>Create Template</strong></li>
+      </ol>
+      <div class="row">
+        <div class="col-md-12">
+          <p ng-if="!loaded">Loading...</p>
+
+          <div ng-show="loaded">
+            <h1>Template Creator</h1>
+
+            <p>Create your new template by filling the form below.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

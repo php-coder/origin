@@ -210,6 +210,10 @@ angular
         templateUrl: 'views/create.html',
         controller: 'CreateController'
       })
+      .when('/project/:project/create/template', {
+        templateUrl: 'views/createTemplate.html',
+        controller: 'CreateTemplateController'
+      })
       .when('/project/:project/create/fromtemplate', {
         templateUrl: 'views/newfromtemplate.html',
         controller: 'NewFromTemplateController'
