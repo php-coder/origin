@@ -14,8 +14,15 @@
 
             <p>Create your new template by filling the form below.</p>
 
-            <div id="editor_holder"></div>
-            <button id="submit">Create (console.log)</button>
+            <form>
+                <div id="editor_holder" class="form-group"></div>
+                <div class="form-group">
+                  <button type="submit" id="submit" class="btn btn-primary btn-lg">Create</button>
+                </div>
+                <div class="form-group">
+                  <textarea id="template_json" class="form-control" disabled rows="20"></textarea>
+                </div>
+            </form>
 
             <script>
               var serviceSchema = {
@@ -137,9 +144,7 @@
 
               // Hook up the submit button to log to the console
               document.getElementById("submit").addEventListener("click",function() {
-                var data = editor.getValue();
-                console.log(data);
-                console.log(formOutputToTemplate(data));
+                $('#template_json').text(JSON.stringify(formOutputToTemplate(editor.getValue()), null, 4));
               });
             </script>
 
