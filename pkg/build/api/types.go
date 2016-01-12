@@ -204,6 +204,9 @@ type BuildSource struct {
 	// TODO: This needs to move under the GitBuildSource struct since it's only
 	// used for git authentication
 	SourceSecret *kapi.LocalObjectReference
+
+	// TODO: document
+	Secrets []SecretSourcePath
 }
 
 // ImageSource describes an image that is used as source for the build
@@ -228,6 +231,15 @@ type ImageSourcePath struct {
 
 	// DestinationDir is the relative directory within the build directory
 	// where files copied from the image are placed.
+	DestinationDir string
+}
+
+// TODO: document
+type SecretSourcePath struct {
+	// TODO: document
+	SecretName string
+
+	// TODO: document
 	DestinationDir string
 }
 

@@ -3,6 +3,7 @@ package builder
 import (
 	"bytes"
 	"errors"
+	"os/exec"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -140,6 +141,24 @@ func (s *S2IBuilder) Build() error {
 		Fragment: ref,
 	}
 
+	//	TODO: read from s.build.Spec.Source.Secrets
+	injections := s2iapi.InjectionList {
+		s2iapi.InjectPath{SourcePath: "/foo", DestinationDir: "/var/secrets"},
+		s2iapi.InjectPath{SourcePath: "/bar", DestinationDir: ""},
+	}
+
+	buildSecretsPath := os.Getenv("BUILD_SECRETS_PATH")
+	glog.V(1).Info("DEBUG: build secrets: %s", buildSecretsPath)
+	if (buildSecretsPath != "") {
+		out, err := exec.Command("/bin/ls", "-l", buildSecretsPath).Output()
+		if err == nil {
+			glog.V(1).Info("output: " + string(out))
+		} else {
+			glog.V(1).Info("ERR:")
+			glog.V(1).Info(err)
+		}
+	}
+
 	config := &s2iapi.Config{
 		WorkingDir:     buildDir,
 		DockerConfig:   &s2iapi.DockerConfig{Endpoint: s.dockerSocket},
@@ -157,7 +176,12 @@ func (s *S2IBuilder) Build() error {
 		Source:     sourceURI.String(),
 		Tag:        tag,
 		ContextDir: s.build.Spec.Source.ContextDir,
+
+		// TODO
+		Injections: injections,
 	}
+
+	glog.V(1).Info("DEBUG: created config with injections (%+v)", injections)
 
 	if s.build.Spec.Strategy.SourceStrategy.ForcePull {
 		glog.V(4).Infof("With force pull true, setting policies to %s", s2iapi.PullAlways)
